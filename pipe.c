@@ -7,8 +7,9 @@
 
 int main(int argc, char* argv[])
 {
+ argv = 'origin.txt';
  FILE *file;
- unsigned char buffer[BLOCK_DIM];
+ char buffer[BLOCK_DIM];
  int n;
  int pid, status;
  int p[2];
@@ -63,8 +64,17 @@ int main(int argc, char* argv[])
       }
       while ((n = read(p[0], buffer, sizeof(buffer))) > 0)
 		   fwrite(buffer, 1, n, file);
+		   printf("Domande: ");
+		   printf(buffer);
+		   printf("\n");
+		   fprint(file,"\n\n");
+		   for(int i = 0; i < N_DOMANDE; i++){
+		   	printf("Risposta %d: ", i + 1);
+		   	fgets(buffer, sizeof(buffer), stdin);	//Standard input: ricevi da tastiera i dati e mettili nel buffer
+		   	fprintf(file, "%s", buffer);
+		   }
+		   close(p[0]);
 	  fclose(file);
-	  close(p[0]);
       return 1;
      }
 }
